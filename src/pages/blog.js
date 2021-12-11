@@ -32,12 +32,15 @@ export const pageQuery = graphql`
         publishDate(formatString: "MMMM Do, YYYY")
         tags
         heroImage {
-          gatsbyImageData(
-            layout: FULL_WIDTH
-            placeholder: BLURRED
-            width: 424
-            height: 212
-          )
+          imgixImage {
+            gatsbyImageData(
+                layout: FULL_WIDTH
+                placeholder: BLURRED
+                width: 424
+                height: 212
+                sizes: "(min-width: 1280px) 362px, (min-width: 1032px) 30vw, (min-width: 704px) 40vw, 90vw"
+            )
+          }
         }
       }
     }
