@@ -18,26 +18,20 @@ class BlogPostTemplate extends React.Component {
       <Layout location={this.props.location}>
         <Seo
           title={post.title}
-          description={post.description.childMarkdownRemark.excerpt}
-          image={`http:${post.heroImage.resize.src}`}
+          image={`http:${post.heroImage.imgixImage.src}`}
         />
         <Hero
-          image={post.heroImage?.gatsbyImageData}
+          image={post.heroImage.imgixImage?.gatsbyImageData}
           title={post.title}
-          content={post.description?.childMarkdownRemark?.excerpt}
         />
         <div className={styles.container}>
           <span className={styles.meta}>
             {post.author?.name} &middot;{' '}
             <time dateTime={post.rawDate}>{post.publishDate}</time> –{' '}
-            {post.body?.childMarkdownRemark?.timeToRead} minute read
           </span>
           <div className={styles.article}>
             <div
               className={styles.body}
-              dangerouslySetInnerHTML={{
-                __html: post.body?.childMarkdownRemark?.html,
-              }}
             />
             <Tags tags={post.tags} />
             {(previous || next) && (
@@ -84,8 +78,15 @@ export const pageQuery = graphql`
       publishDate(formatString: "MMMM Do, YYYY")
       rawDate: publishDate
       heroImage {
-        gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, width: 1280)
-      }
+        imgixImage {
+          gatsbyImageData(
+            layout: FULL_WIDTH
+            placeholder: BLURRED
+            width: 1280
+            sizes: "(min-width: 1280px) 1088px, (min-width: 1024) 85vw, 100vw"
+            )
+          }   
+        }
       tags
     }
     previous: contentfulBlogPost(slug: { eq: $previousPostSlug }) {

@@ -17,10 +17,10 @@ const ArticlePreview = ({ posts }) => {
         {posts.map((post) => {
           return (
             <li key={post.slug}>
-              <div className={styles.link}>
+              <Link to={`/blog/${post.slug}`} className={styles.link}>
                 <GatsbyImage alt="" image={post.heroImage.imgixImage.gatsbyImageData} />
                 <h2 className={styles.title}>{post.title}</h2>
-              </div>
+              </Link>
               <div
               />
               <div className={styles.meta}>
