@@ -1,11 +1,12 @@
 import * as React from "react"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import Img from 'gatsby-image';
 
-const IndexPage = () => (
+const IndexPage = ({data}) => (
   <Layout>
     <Seo title="Home" />
     <h1>Hi people</h1>
@@ -19,6 +20,13 @@ const IndexPage = () => (
       alt="A Gatsby astronaut"
       style={{ marginBottom: `1.45rem` }}
     />
+    <Img
+      fluid={{
+        ...data.imgixImage.fluid,
+        sizes: '100vw',
+        aspectRatio: 2/3,
+      }}
+    />
     <p>
       <Link to="/page-2/">Go to page 2</Link> <br />
       <Link to="/using-typescript/">Go to "Using TypeScript"</Link> <br />
@@ -29,3 +37,15 @@ const IndexPage = () => (
 )
 
 export default IndexPage
+
+export const query = graphql`
+  query MyQuery {
+    imgixImage(url: "https://sherwinski.imgix.net/nz1.jpg") {
+      url
+      fluid {
+        src
+        srcSet
+      }
+    }
+  }
+`
